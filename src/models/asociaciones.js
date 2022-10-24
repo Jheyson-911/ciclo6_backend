@@ -1,0 +1,10 @@
+import { sequelize } from "../database/config.js";
+import { Docente } from "./docente.model.js";
+import { Documentos } from "./documentos.model.js";
+import { Empresa } from "./empresa.model.js";
+import  { Estudiante } from "./estudiante.model.js"
+import { Persona } from "./persona.model.js";
+import { Practicas } from "./practicas.model.js";
+import { Representante } from "./representante.model.js";
+import { Solicutd } from "./solicitud.model.js";
+import { User } from "./user.model.js";
