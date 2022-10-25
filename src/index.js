@@ -10,11 +10,11 @@ async function destroyModel (){
         console.log("All models were synchronized successfully.");
         console.log("listening on port " + port);
     }catch(e){
-        console.log("Ocurrio un error al eliminar los modelos")
+        console.log("Ocurrio un error al eliminar los modelos"+ e.message);
     }
 }
 
-let dato = false;
+let dato = true;
 
 async function main(){
     try {
