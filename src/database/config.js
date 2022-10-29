@@ -1,12 +1,6 @@
-import Sequelize  from "sequelize";
+import Sequelize from 'sequelize';
 
-
-export const sequelize = new Sequelize(
-    'bd_py',
-    'root',
-    '',
-    {
-        host: 'localhost',
-        dialect: 'mysql',
-    }
-)
+export const sequelize = new Sequelize('bd_py', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql'
+});
