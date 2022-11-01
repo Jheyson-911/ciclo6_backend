@@ -18,7 +18,7 @@ export const Docente = sequelize.define(
     ap_materno: {
       type: DataTypes.STRING
     },
-    grado_acedemico: {
+    grado_academico: {
       type: DataTypes.STRING
     },
     area_encargada: {

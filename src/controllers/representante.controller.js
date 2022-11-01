@@ -5,9 +5,13 @@ export const getRepresentantes = async (req, res) => {
     const representantes = await Representante.findAll();
     if (!representantes.length > 0) {
       return res.status(404).json({
-        message: 'No se encontraron representantes que mostrar'
+        message: 'No se encontraron representantes'
       });
     }
+    res.status(200).json({
+      message: 'Lista de representantes',
+      data: representantes
+    });
   } catch (e) {
     res.status(500).json({
       message: 'Ocurrió un error al obtener los representantes ' + e.message
@@ -44,9 +48,9 @@ export const updateRepresentante = async (req, res) => {
   const { id } = req.params;
   const { nombre, cargo, area } = req.body;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para eliminar el representante'
+        message: 'Ingrese un id valido'
       });
     }
     if (!nombre || !cargo || !area) {
@@ -72,9 +76,9 @@ export const updateRepresentante = async (req, res) => {
 export const deleteRepresentante = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para eliminar el representante'
+        message: 'Ingrese un id valido'
       });
     }
     const representante = await Representante.destroy({ where: { id } });
@@ -92,15 +96,15 @@ export const deleteRepresentante = async (req, res) => {
 export const getRepresentanteById = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para buscar el representante'
+        message: 'Ingrese un id valido'
       });
     }
     const representante = await Representante.findOne({ where: { id } });
     if (representante === null) {
       return res.status(404).json({
-        message: 'No se encontraron coincidencias'
+        message: 'No se encontro el representante'
       });
     }
     res.status(200).json({

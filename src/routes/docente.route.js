@@ -1,6 +1,7 @@
 import {
   createDocente,
   deleteDocente,
+  getActiveDocente,
   getDocenteById,
   getDocentes,
   updateDocente
@@ -11,6 +12,7 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/all', getDocentes);
+router.get('/active', getActiveDocente);
 router.get('/:id', getDocenteById);
 router.put('/:id', updateDocente);
 router.delete('/:id', deleteDocente);

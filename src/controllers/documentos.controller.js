@@ -73,15 +73,15 @@ export const createDocumentos = async (req, res) => {
 export const updateDocumentos = async (req, res) => {
   const { id } = req.params;
   try {
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
+      });
+    }
     /* It's checking if the request body is empty. */
     if (!Object.keys(req.body).length > 0) {
       return res.json({
         message: 'Tiene que enviar por lo menos un documento a actualizar'
-      });
-    }
-    if (!id) {
-      return res.json({
-        message: 'Debe enviar el id para actualizar'
       });
     }
     const {
@@ -116,9 +116,9 @@ export const updateDocumentos = async (req, res) => {
 export const getDocumentosById = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      return res.status(404).json({
-        message: 'Envié el id para encontrar los documentos'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const documentos = await Documentos.findOne({ where: { id } });

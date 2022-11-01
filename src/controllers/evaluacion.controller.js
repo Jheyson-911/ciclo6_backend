@@ -20,16 +20,23 @@ export const getEvaluaciones = async (req, res) => {
 };
 
 export const createEvaluacion = async (req, res) => {
-  const { fase, fecha, calificacion, observaciones, estado, fk_practicaId } =
-    req.body;
+  const {
+    fase,
+    fecha,
+    calificacion,
+    observaciones,
+    estado,
+    fk_practicaId,
+    fk_docenteId
+  } = req.body;
   try {
     if (
       !fase ||
       !fecha ||
       !calificacion ||
-      !observaciones ||
       !estado ||
-      !fk_practicaId
+      !fk_practicaId ||
+      !fk_docenteId
     ) {
       return res.status(403).json({
         message: 'Complete todos los campos'
@@ -41,7 +48,8 @@ export const createEvaluacion = async (req, res) => {
       calificacion,
       observaciones,
       estado,
-      fk_practicaId
+      fk_practicaId,
+      fk_docenteId
     });
     res.status(200).json({
       message: 'Evaluacion creada correctamente',
@@ -56,13 +64,14 @@ export const createEvaluacion = async (req, res) => {
 export const updateEvaluacion = async (req, res) => {
   const { id } = req.params;
   const { fase, fecha, calificacion, observaciones, estado } = req.body;
+  console.table(req.body);
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para actualizar una evaluacion'
+        message: 'Ingrese un id valido'
       });
     }
-    if (!fase || !fecha || !calificacion || !observaciones || !estado) {
+    if (!fase || !fecha || !calificacion || !estado) {
       return res.status(403).json({
         message: 'Complete todos los campos'
       });
@@ -78,7 +87,7 @@ export const updateEvaluacion = async (req, res) => {
       { where: { id } }
     );
     res.status(200).json({
-      message: 'Evaluacion creada correctamente',
+      message: 'Evaluacion actualizada correctamente',
       data: evaluacion
     });
   } catch (e) {
@@ -90,9 +99,9 @@ export const updateEvaluacion = async (req, res) => {
 export const deleteEvaluacion = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      return res.status(404).json({
-        message: 'Debe enviar el id para eliminar la evaluacion'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const evaluacion = await Evaluacion.destroy({ where: { id } });
@@ -110,12 +119,17 @@ export const deleteEvaluacion = async (req, res) => {
 export const getEvaluacionById = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      return res.status(404).json({
-        message: 'Debe enviar el id para eliminar la evaluacion'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const evaluacion = await Evaluacion.findOne({ where: { id } });
+    if (evaluacion === null) {
+      return res.status(404).json({
+        message: 'NO se encontro ninguna empresa'
+      });
+    }
     res.status(200).json({
       message: 'Evluacion encontrada',
       data: evaluacion

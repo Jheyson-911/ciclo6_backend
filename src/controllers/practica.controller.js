@@ -3,9 +3,9 @@ import { Practicas } from '../models/practicas.model.js';
 export const getPracticas = async (req, res) => {
   try {
     const practicas = await Practicas.findAll();
-    if (practicas === null) {
+    if (!practicas.length > 0) {
       return res.status(404).json({
-        message: 'No se encontraron solicitudes'
+        message: 'No se encontraron practicas'
       });
     }
     res.status(200).json({
@@ -23,7 +23,7 @@ export const createPractica = async (req, res) => {
   const { f_inicio, f_fin, horas, estado, fk_estudianteId, fk_empresaId } =
     req.body;
   try {
-    if (!f_inicio || !f_fin || !horas || !fk_estudianteId || fk_empresaId) {
+    if (!f_inicio || !f_fin || !horas || !fk_estudianteId || !fk_empresaId) {
       return res.status(403).json({
         message: 'Complete todos los campos'
       });
@@ -66,9 +66,9 @@ export const updatePractica = async (req, res) => {
   const { f_inicio, f_fin, horas, estado, fk_estudianteId, fk_empresaId } =
     req.body;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para actualizar la practica'
+        message: 'Ingrese un id valido'
       });
     }
     if (
@@ -77,7 +77,7 @@ export const updatePractica = async (req, res) => {
       !horas ||
       !estado ||
       !fk_estudianteId ||
-      fk_empresaId
+      !fk_empresaId
     ) {
       return res.status(403).json({
         message: 'Complete todos los campos'
@@ -108,15 +108,39 @@ export const updatePractica = async (req, res) => {
 export const deletePractica = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      return res.staus(403).json({
-        message: 'Debe enviar el id para eliminar la practica'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const practica = await Practicas.destroy({ where: { id } });
 
     res.status(200).json({
       message: 'Practica eliminada correctamente',
+      data: practica
+    });
+  } catch (e) {
+    res.status(500).json({
+      message: 'Ocurrio un error al eliminar la practica ' + e.message
+    });
+  }
+};
+export const getPracticasById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!id) {
+      return res.staus(403).json({
+        message: 'Debe enviar el id para eliminar la practica'
+      });
+    }
+    const practica = await Practicas.findOne({ where: { id } });
+    if (practica === null) {
+      return res.status(404).json({
+        message: 'NO se encontro ninguna practica'
+      });
+    }
+    res.status(200).json({
+      message: 'Practica encontrada',
       data: practica
     });
   } catch (e) {

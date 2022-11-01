@@ -43,9 +43,9 @@ export const updatePost = async (req, res) => {
   const { id } = req.params;
   const { titulo, descripcion } = req.body;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para actualizar el post '
+        message: 'Ingrese un id valido'
       });
     }
     if (!titulo || !descripcion) {
@@ -73,9 +73,9 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe enviar el id para eliminar el post '
+        message: 'Ingrese un id valido'
       });
     }
     const post = await Post.destroy({ where: { id } });
@@ -98,6 +98,11 @@ export const getPostById = async (req, res) => {
       });
     }
     const post = await Post.findOne({ where: { id } });
+    if (post === null) {
+      return res.status(404).json({
+        message: 'No se encontró el post'
+      });
+    }
     res.status(200).json({
       message: 'Post encontrado',
       data: post

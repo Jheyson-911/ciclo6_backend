@@ -28,7 +28,8 @@ export const createSolicitud = async (req, res) => {
     representante,
     cargo,
     area,
-    descripcion
+    descripcion,
+    fk_estudianteId
   } = req.body;
   try {
     if (
@@ -39,7 +40,8 @@ export const createSolicitud = async (req, res) => {
       !representante ||
       !cargo ||
       !area ||
-      !descripcion
+      !descripcion ||
+      !fk_estudianteId
     ) {
       return res.status(500).json({
         message: 'Complete todos los campos'
@@ -53,7 +55,8 @@ export const createSolicitud = async (req, res) => {
       representante,
       cargo,
       area,
-      descripcion
+      descripcion,
+      fk_estudianteId
     });
     res.status(200).json({
       message: 'Solicitud creada correctamente',
@@ -79,9 +82,9 @@ export const updateSolicitud = async (req, res) => {
     descripcion
   } = req.body;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe mandar el id para actualizar la solicitud'
+        message: 'Ingrese un id valido'
       });
     }
     if (
@@ -98,14 +101,27 @@ export const updateSolicitud = async (req, res) => {
         message: 'Complete todos los campos'
       });
     }
-    const solicitud = await Solicitud.findOne({ where: { id } });
+    const solicitud = await Solicitud.update(
+      {
+        nombre_empresa,
+        actividad,
+        sector,
+        direccion,
+        representante,
+        cargo,
+        area,
+        descripcion
+      },
+      { where: { id } }
+    );
     if (solicitud === null) {
       return res.status(404).json({
-        message: 'No se encontro la solicitud '
+        message: 'No se actualizo la solicitud '
       });
     }
     res.status(200).json({
-      message: 'Solicitud actualizada correctamente'
+      message: 'Solicitud actualizada correctamente',
+      data: solicitud
     });
   } catch (e) {
     res.status(500).json({
@@ -117,9 +133,9 @@ export const updateSolicitud = async (req, res) => {
 export const deleteSolicitud = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe mandar el id para actualizar la solicitud'
+        message: 'Ingrese un id valido'
       });
     }
     const solicitud = await Solicitud.destroy({ where: { id } });
@@ -137,9 +153,9 @@ export const deleteSolicitud = async (req, res) => {
 export const getSolicitudesById = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
+    if (!(id > 0)) {
       return res.status(403).json({
-        message: 'Debe mandar el id para actualizar la solicitud'
+        message: 'Ingrese un id valido'
       });
     }
     const solicitud = await Solicitud.findOne({ where: { id } });

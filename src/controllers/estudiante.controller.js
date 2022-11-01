@@ -3,7 +3,8 @@ import { Estudiante } from '../models/estudiante.model.js';
 export const getEstudiantes = async (req, res) => {
   try {
     const estudiantes = await Estudiante.findAll();
-    if (!estudiantes === null) {
+    console.table(estudiantes);
+    if (!estudiantes.length > 0) {
       return res.status(404).json({
         message: 'No se encontraron estudiantes '
       });
@@ -86,6 +87,11 @@ export const updateEstudiante = async (req, res) => {
     estado_practicas
   } = req.body;
   try {
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
+      });
+    }
     if (
       !codigo ||
       !nombres ||
@@ -99,11 +105,6 @@ export const updateEstudiante = async (req, res) => {
     ) {
       return res.status(402).json({
         message: 'Complete todos los campos'
-      });
-    }
-    if (!id) {
-      return res.status(403).json({
-        message: 'Debe enviar el id para actualizar un estudiante'
       });
     }
     const estudiante = await Estudiante.update(
@@ -134,9 +135,9 @@ export const updateEstudiante = async (req, res) => {
 export const deleteEstudiante = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      res.status(403).json({
-        message: 'Debe enviar el id para eliminar un estudiante'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const estudiante = await Estudiante.destroy({ where: { id } });
@@ -154,9 +155,9 @@ export const deleteEstudiante = async (req, res) => {
 export const getEstudianteById = async (req, res) => {
   const { id } = req.params;
   try {
-    if (!id) {
-      return res.json({
-        message: 'Debe enviar el id para obtener un estudiante'
+    if (!(id > 0)) {
+      return res.status(403).json({
+        message: 'Ingrese un id valido'
       });
     }
     const estudiante = await Estudiante.findOne({ where: { id } });

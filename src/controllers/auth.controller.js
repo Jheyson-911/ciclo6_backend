@@ -72,7 +72,7 @@ export const login = async (req, res) => {
         message: 'Usuario no encontrado'
       });
     }
-    if (!user.estado === 'activo') {
+    if (user.estado !== 'activo') {
       return res.status(401).json({
         message: 'Usuario dado de baja'
       });
