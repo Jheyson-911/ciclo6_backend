@@ -22,6 +22,9 @@ export const User = sequelize.define(
     },
     rol: {
       type: DataTypes.STRING
+    },
+    estado: {
+      type: DataTypes.STRING
     }
   },
   {

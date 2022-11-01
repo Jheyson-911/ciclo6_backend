@@ -10,11 +10,25 @@ import bcrypt from 'bcryptjs';
  * @param res - The response object.
  */
 export const register = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, rol, estado } = req.body;
   try {
-    if (!username || !email || !password) {
-      res.json({
+    if (!username || !email || !password || !estado) {
+      return res.json({
         message: 'Complete todos los campos'
+      });
+    }
+    if (!rol) {
+      const hash = bcrypt.hashSync(password, 10);
+      const user = await User.create({
+        username,
+        email,
+        password: hash,
+        rol: 'estudiante',
+        estado
+      });
+      return res.status(200).json({
+        message: 'Usuario creado correctamente',
+        data: user
       });
     }
     const hash = bcrypt.hashSync(password, 10);
@@ -22,9 +36,10 @@ export const register = async (req, res) => {
       username,
       email,
       password: hash,
-      rol: 'estudiante'
+      rol,
+      estado
     });
-    res.json({
+    return res.status(200).json({
       message: 'Usuario creado correctamente',
       data: user
     });
@@ -47,28 +62,32 @@ export const login = async (req, res) => {
   const { username, password } = req.body;
   try {
     if (!username || !password) {
-      res.json({
+      return res.status(206).json({
         message: 'Complete todos los campos'
       });
     }
     const user = await User.findOne({ where: { username } });
     if (!user > 0) {
-      res.json({
+      return res.status(404).json({
         message: 'Usuario no encontrado'
       });
     }
+    if (!user.estado === 'activo') {
+      return res.status(401).json({
+        message: 'Usuario dado de baja'
+      });
+    }
     if (!bcrypt.compareSync(password, user.password)) {
-      res.json({
+      return res.status(401).json({
         message: 'Contraseña incorrecta'
       });
     }
-
     res.json({
       message: 'Bienvenido ' + user.username,
       data: user
     });
   } catch (e) {
-    res.json({
+    res.status(500).json({
       message: 'Ocurrio un error al iniciar sesion :' + e.message
     });
   }

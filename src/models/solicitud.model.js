@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/config.js';
 
-export const Solicutd = sequelize.define(
+export const Solicitud = sequelize.define(
   'Solicitud',
   {
     id: {

@@ -7,7 +7,19 @@ export const Documentos = sequelize.define('Documentos', {
     primaryKey: true,
     autoIncrement: true
   },
-  carata_aceptacion: {
+  carta_presentacion: {
+    type: DataTypes.STRING
+  },
+  carta_aceptacion: {
+    type: DataTypes.STRING
+  },
+  plan_ppp: {
+    type: DataTypes.STRING
+  },
+  constancia: {
+    type: DataTypes.STRING
+  },
+  informe_ppp: {
     type: DataTypes.STRING
   }
 });

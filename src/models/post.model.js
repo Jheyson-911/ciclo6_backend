@@ -1,24 +1,18 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/config.js';
 
-export const Practicas = sequelize.define(
-  'Practicas',
+export const Post = sequelize.define(
+  'Post',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    f_inicio: {
-      type: DataTypes.DATE
-    },
-    f_fin: {
-      type: DataTypes.DATE
-    },
-    horas: {
+    titulo: {
       type: DataTypes.STRING
     },
-    estado: {
+    descripcion: {
       type: DataTypes.STRING
     }
   },

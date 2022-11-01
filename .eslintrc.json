@@ -11,6 +11,7 @@
   },
   "rules": {
     "linebreak-style": 0,
+    "camelcase": 1,
     "space-before-function-paren": ["error", "always"],
     "sort-imports": [
       "error",
@@ -21,6 +22,25 @@
         "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
         "allowSeparatedGroups": false
       }
-    ]
+    ],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectExpression": {
+          "multiline": true,
+          // "minProperties": 8,
+          "consistent": true
+        },
+        "ObjectPattern": { "multiline": true },
+        "ImportDeclaration": {
+          "multiline": true,
+          // "minProperties": 8,
+          "consistent": true
+        },
+        "ExportDeclaration": { "multiline": true, "minProperties": 8 }
+      }
+    ],
+    "consistent-return": 0,
+    "operator-linebreak": ["error", "after"]
   }
 }

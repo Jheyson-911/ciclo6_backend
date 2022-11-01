@@ -8,13 +8,18 @@ import { User } from '../models/user.model.js';
  */
 export const getUsers = async (req, res) => {
   try {
-    const user = await User.finAll();
-    res.json({
+    const user = await User.findAll();
+    if (!user === null) {
+      return res.status(404).json({
+        message: 'No se encontraron usuarios'
+      });
+    }
+    res.status(200).json({
       message: 'Lista de usuarios',
       data: user
     });
   } catch (e) {
-    res.json({
+    res.status(500).json({
       message: 'Ocurrio un error al listar los usuarios: ' + e.message
     });
   }
@@ -28,13 +33,18 @@ export const getUsers = async (req, res) => {
 export const getUserById = async (req, res) => {
   const { id } = req.params;
   try {
+    if (!id) {
+      return res.status(206).json({
+        message: 'Debe enviar el id para buscar el usuario'
+      });
+    }
     const user = await User.findOne({ where: { id } });
-    res.json({
+    res.status(200).json({
       message: 'Usuario encontrado',
       data: user
     });
   } catch (e) {
-    res.json({
+    res.status(500).json({
       message: 'Ocurrio un error al buscar el usuario: ' + e.message
     });
   }

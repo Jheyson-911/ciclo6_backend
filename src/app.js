@@ -1,6 +1,14 @@
 import './models/asociaciones.js';
 import authRoutes from './routes/auth.route.js';
+import docenteRoutes from './routes/docente.route.js';
+import documentoRoutes from './routes/documentos.route.js';
+import empresaRoutes from './routes/empresa.route.js';
+import estudianteRoutes from './routes/estudiante.route.js';
+import evaluacionRoutes from './routes/evaluacion.route.js';
 import express from 'express';
+import postRoutes from './routes/post.route.js';
+import representeRoutes from './routes/representante.route.js';
+import solicitudRoutes from './routes/solicitud.route.js';
 import userRoutes from './routes/user.route.js';
 
 const app = express();
@@ -14,6 +22,14 @@ app.get('/', (req, res) => {
 });
 
 app.use('/apiv1/auth', authRoutes);
-app.use('apiv1/user', userRoutes);
+app.use('/apiv1/user', userRoutes);
+app.use('/apiv1/empresa', empresaRoutes);
+app.use('/apiv1/estudiante', estudianteRoutes);
+app.use('/apiv1/docente', docenteRoutes);
+app.use('/apiv1/documentos', documentoRoutes);
+app.use('/apiv1/representante', representeRoutes);
+app.use('/apiv1/solicitud', solicitudRoutes);
+app.use('/apiv1/post', postRoutes);
+app.use('/apiv1/evaluacion', evaluacionRoutes);
 
 export default app;

@@ -1,36 +1,27 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../database/config.js';
 
-export const Persona = sequelize.define(
-  'Persona',
+export const Evaluacion = sequelize.define(
+  'Evaluacion',
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    nombres: {
+    fase: {
       type: DataTypes.STRING
     },
-    ap_paterno: {
+    fecha: {
+      type: DataTypes.DATE
+    },
+    calificacion: {
       type: DataTypes.STRING
     },
-    ap_materno: {
+    observaciones: {
       type: DataTypes.STRING
     },
-    dni: {
-      type: DataTypes.STRING
-    },
-    edad: {
-      type: DataTypes.STRING
-    },
-    sexo: {
-      type: DataTypes.STRING
-    },
-    telefono: {
-      type: DataTypes.STRING
-    },
-    direccion: {
+    estado: {
       type: DataTypes.STRING
     }
   },

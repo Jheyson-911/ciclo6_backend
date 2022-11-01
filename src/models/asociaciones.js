@@ -3,40 +3,60 @@ import { Docente } from './docente.model.js';
 import { Documentos } from './documentos.model.js';
 import { Empresa } from './empresa.model.js';
 import { Estudiante } from './estudiante.model.js';
-import { Persona } from './persona.model.js';
+import { Evaluacion } from './evaluacion.model.js';
+import { Post } from './post.model.js';
 import { Practicas } from './practicas.model.js';
 import { Representante } from './representante.model.js';
-import { Solicutd } from './solicitud.model.js';
+import { Solicitud } from './solicitud.model.js';
 import { User } from './user.model.js';
 
 /* A way to define the relationships between the models. */
-Persona.hasOne(User, {
-  foreignKey: 'fk_personaId'
+// LOGIN
+
+User.hasOne(Estudiante, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
 });
-User.belongsTo(Persona, {
-  foreignKey: 'fk_personaId'
+Estudiante.belongsTo(User, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
+});
+User.hasOne(Docente, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
+});
+Docente.belongsTo(User, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
 });
 
-Persona.hasOne(Docente, {
-  foreignKey: {
-    name: 'fk_personaId'
-  }
-});
-Docente.belongsTo(Persona, {
-  foreignKey: {
-    name: 'fk_personaId'
-  }
-});
+// END LOGIN
 
-Persona.hasOne(Estudiante, {
+// SOLICITUD
+
+Estudiante.hasMany(Solicitud, {
   foreignKey: {
-    name: 'fk_personaId'
+    name: 'fk_estudianteId'
   }
 });
-Estudiante.belongsTo(Persona, {
+Solicitud.belongsTo(Estudiante, {
   foreignKey: {
-    name: 'fk_personaId'
+    name: 'fk_estudianteId'
   }
+});
+// END SOLICITUD
+
+// PRACTICAS
+
+Estudiante.hasMany(Practicas, {
+  foreignKey: 'fk_estudianteId'
+});
+Practicas.belongsTo(Estudiante, {
+  foreignKey: 'fk_estudianteId'
 });
 
 Practicas.hasOne(Documentos, {
@@ -44,28 +64,20 @@ Practicas.hasOne(Documentos, {
     name: 'fk_practicaId'
   }
 });
-
 Documentos.belongsTo(Practicas, {
   foreignKey: {
     name: 'fk_practicaId'
   }
 });
 
-Estudiante.hasMany(Practicas, {
-  foreignKey: 'fk_estudianteId'
-});
-Practicas.belongsTo(Estudiante, {
-  foreignKey: 'fk_personaId'
-});
-
-Estudiante.hasMany(Solicutd, {
+Empresa.hasOne(Practicas, {
   foreignKey: {
-    name: 'fk_estudianteId'
+    name: 'fk_empresaId'
   }
 });
-Solicutd.belongsTo(Estudiante, {
+Practicas.belongsTo(Empresa, {
   foreignKey: {
-    name: 'fk_estudianteId'
+    name: 'fk_empresaId'
   }
 });
 
@@ -79,14 +91,43 @@ Representante.belongsTo(Empresa, {
     name: 'fk_empresaId'
   }
 });
+// END PRACTICAS
 
-Practicas.hasOne(Empresa, {
+// EVALUACIÓN
+
+Practicas.hasMany(Evaluacion, {
   foreignKey: {
     name: 'fk_practicaId'
   }
 });
-Empresa.belongsTo(Practicas, {
+Evaluacion.belongsTo(Practicas, {
   foreignKey: {
     name: 'fk_practicaId'
   }
 });
+
+Docente.hasMany(Evaluacion, {
+  foreignKey: {
+    name: 'fk_docenteId'
+  }
+});
+Evaluacion.belongsTo(Docente, {
+  foreignKey: {
+    name: 'fk_docenteId'
+  }
+});
+// END EVALUACIÓN
+
+// POST
+
+User.hasMany(Post, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
+});
+Post.belongsTo(User, {
+  foreignKey: {
+    name: 'fk_userId'
+  }
+});
+// END POST

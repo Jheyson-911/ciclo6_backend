@@ -9,10 +9,31 @@ export const Docente = sequelize.define(
       primaryKey: true,
       autoIncrement: true
     },
+    nombres: {
+      type: DataTypes.STRING
+    },
+    ap_paterno: {
+      type: DataTypes.STRING
+    },
+    ap_materno: {
+      type: DataTypes.STRING
+    },
     grado_acedemico: {
       type: DataTypes.STRING
     },
     area_encargada: {
+      type: DataTypes.STRING
+    },
+    dni: {
+      type: DataTypes.STRING
+    },
+    edad: {
+      type: DataTypes.STRING
+    },
+    sexo: {
+      type: DataTypes.STRING
+    },
+    telefono: {
       type: DataTypes.STRING
     },
     estado: {
