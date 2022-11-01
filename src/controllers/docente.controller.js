@@ -9,7 +9,6 @@ import { Docente } from '../models/docente.model.js';
 export const getDocentes = async (req, res) => {
   try {
     let docentes = await Docente.findAll();
-    console.table(docentes);
     if (!docentes.length > 0) {
       return res.status(404).json({
         message: 'No se encontraron docentes'

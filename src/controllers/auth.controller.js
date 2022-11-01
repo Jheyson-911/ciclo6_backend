@@ -1,6 +1,7 @@
 /* Importing the bcryptjs library and the user model. */
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 
 /**
  * It takes the username, email and password from the request body, hashes the password,
@@ -82,9 +83,16 @@ export const login = async (req, res) => {
         message: 'Contraseña incorrecta'
       });
     }
+    const token = jwt.sign(
+      { id: user.id, usuario: user.username, rol: user.rol },
+      '123',
+      {
+        expiresIn: '30days'
+      }
+    );
     res.json({
       message: 'Bienvenido ' + user.username,
-      data: user
+      data: token
     });
   } catch (e) {
     res.status(500).json({

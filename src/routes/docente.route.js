@@ -8,10 +8,11 @@ import {
 } from '../controllers/docente.controller.js';
 
 import { Router } from 'express';
+import { verifyToken } from '../middlewares/jwtVerify.middleware.js';
 
 const router = Router();
 
-router.get('/all', getDocentes);
+router.get('/all', verifyToken, getDocentes);
 router.get('/active', getActiveDocente);
 router.get('/:id', getDocenteById);
 router.put('/:id', updateDocente);
