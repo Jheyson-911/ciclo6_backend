@@ -20,14 +20,14 @@ export const getPosts = async (req, res) => {
 };
 
 export const createPost = async (req, res) => {
-  const { titulo, descripcion, fk_userId } = req.body;
+  const { titulo, descripcion } = req.body;
   try {
-    if (!titulo || !descripcion || !fk_userId) {
+    if (!titulo || !descripcion) {
       return res.status(403).json({
         message: 'Complete todos los campos'
       });
     }
-    const post = await Post.create({ titulo, descripcion, fk_userId });
+    const post = await Post.create({ titulo, descripcion, fk_userId: req.id });
     res.status(200).json({
       message: 'Post creado correctamente',
       data: post

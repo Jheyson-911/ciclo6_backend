@@ -6,6 +6,7 @@ import {
   updateSolicitud
 } from '../controllers/solicitud.controller.js';
 import { Router } from 'express';
+import { verifyToken } from '../middlewares/jwtVerify.middleware.js';
 
 const router = new Router();
 
@@ -13,6 +14,6 @@ router.get('/all', getSolicitudes);
 router.get('/:id', getSolicitudesById);
 router.put('/:id', updateSolicitud);
 router.delete('/:id', deleteSolicitud);
-router.post('/:id', createSolicitud);
+router.post('/:id', verifyToken, createSolicitud);
 
 export default router;

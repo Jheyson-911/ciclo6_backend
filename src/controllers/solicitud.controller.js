@@ -28,8 +28,7 @@ export const createSolicitud = async (req, res) => {
     representante,
     cargo,
     area,
-    descripcion,
-    fk_estudianteId
+    descripcion
   } = req.body;
   try {
     if (
@@ -40,8 +39,7 @@ export const createSolicitud = async (req, res) => {
       !representante ||
       !cargo ||
       !area ||
-      !descripcion ||
-      !fk_estudianteId
+      !descripcion
     ) {
       return res.status(500).json({
         message: 'Complete todos los campos'
@@ -56,7 +54,7 @@ export const createSolicitud = async (req, res) => {
       cargo,
       area,
       descripcion,
-      fk_estudianteId
+      fk_estudianteId: req.id
     });
     res.status(200).json({
       message: 'Solicitud creada correctamente',
