@@ -2,7 +2,6 @@
 
 ###
 
-<img src="https://raw.githubusercontent.com/jheyson-911/jheyson-911/blob/output/snake.svg" alt="Snake animation" />
 
 ###
 
