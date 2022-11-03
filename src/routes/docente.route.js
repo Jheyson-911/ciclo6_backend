@@ -12,7 +12,7 @@ import { verifyToken } from '../middlewares/jwtVerify.middleware.js';
 
 const router = Router();
 
-router.get('/all', verifyToken, getDocentes);
+router.get('/all', getDocentes);
 router.get('/active', getActiveDocente);
 router.get('/:id', getDocenteById);
 router.put('/:id', updateDocente);

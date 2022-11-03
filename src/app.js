@@ -8,6 +8,7 @@ import evaluacionRoutes from './routes/evaluacion.route.js';
 import express from 'express';
 import postRoutes from './routes/post.route.js';
 import practicaRoutes from './routes/practica.route.js';
+import reportesRoutes from './routes/reportes.route.js';
 import representeRoutes from './routes/representante.route.js';
 import solicitudRoutes from './routes/solicitud.route.js';
 import userRoutes from './routes/user.route.js';
@@ -33,5 +34,6 @@ app.use('/apiv1/solicitud', solicitudRoutes);
 app.use('/apiv1/post', postRoutes);
 app.use('/apiv1/evaluacion', evaluacionRoutes);
 app.use('/apiv1/practica', practicaRoutes);
+app.use('/apiv1/reportes', reportesRoutes);
 
 export default app;
