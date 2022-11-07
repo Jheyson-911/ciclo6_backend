@@ -12,6 +12,9 @@ export const Solicitud = sequelize.define(
     nombre_empresa: {
       type: DataTypes.STRING
     },
+    ruc: {
+      type: DataTypes.STRING
+    },
     actividad: {
       type: DataTypes.STRING
     },

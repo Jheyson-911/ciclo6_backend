@@ -22,6 +22,7 @@ export const getSolicitudes = async (req, res) => {
 export const createSolicitud = async (req, res) => {
   const {
     nombre_empresa,
+    ruc,
     actividad,
     sector,
     direccion,
@@ -33,6 +34,7 @@ export const createSolicitud = async (req, res) => {
   try {
     if (
       !nombre_empresa ||
+      !ruc ||
       !actividad ||
       !sector ||
       !direccion ||
@@ -47,6 +49,7 @@ export const createSolicitud = async (req, res) => {
     }
     const solicitud = await Solicitud.create({
       nombre_empresa,
+      ruc,
       actividad,
       sector,
       direccion,
@@ -71,6 +74,7 @@ export const updateSolicitud = async (req, res) => {
   const { id } = req.params;
   const {
     nombre_empresa,
+    ruc,
     actividad,
     sector,
     direccion,
@@ -87,6 +91,7 @@ export const updateSolicitud = async (req, res) => {
     }
     if (
       !nombre_empresa ||
+      !ruc ||
       !actividad ||
       !sector ||
       !direccion ||
@@ -102,6 +107,7 @@ export const updateSolicitud = async (req, res) => {
     const solicitud = await Solicitud.update(
       {
         nombre_empresa,
+        ruc,
         actividad,
         sector,
         direccion,
