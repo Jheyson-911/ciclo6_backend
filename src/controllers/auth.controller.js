@@ -1,4 +1,5 @@
 /* Importing the bcryptjs library and the user model. */
+import { Estudiante } from '../models/estudiante.model.js';
 import { User } from '../models/user.model.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
@@ -67,7 +68,10 @@ export const login = async (req, res) => {
         message: 'Complete todos los campos'
       });
     }
-    const user = await User.findOne({ where: { username } });
+    const user = await User.findOne({
+      where: { username },
+      include: Estudiante
+    });
     if (!user > 0) {
       return res.status(404).json({
         message: 'Usuario no encontrado'
@@ -84,7 +88,16 @@ export const login = async (req, res) => {
       });
     }
     const token = jwt.sign(
-      { id: user.id, usuario: user.username, rol: user.rol },
+      {
+        id: user.id,
+        usuario: user.username,
+        rol: user.rol,
+        estado: user.estado,
+        nombres: user.Estudiante.nombres,
+        ap_paterno: user.Estudiante.ap_paterno,
+        ap_materno: user.Estudiante.ap_materno,
+        codigo: user.Estudiante.codigo
+      },
       '123',
       {
         expiresIn: '30days'
@@ -92,7 +105,8 @@ export const login = async (req, res) => {
     );
     res.json({
       message: 'Bienvenido ' + user.username,
-      data: token
+      data: token,
+      user
     });
   } catch (e) {
     res.status(500).json({
