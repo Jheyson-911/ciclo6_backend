@@ -1,6 +1,7 @@
 import { Documentos } from '../../models/documentos.model.js';
 import { Estudiante } from '../../models/estudiante.model.js';
 import { Evaluacion } from '../../models/evaluacion.model.js';
+import { Op } from 'sequelize';
 import { Practicas } from '../../models/practicas.model.js';
 
 export const getPracticeByStudent = async (req, res) => {
@@ -134,6 +135,72 @@ export const evaluacionByPractica = async (req, res) => {
     res.status(200).json({
       message: 'Evaluaciones de la practica',
       data: evaluaciones
+    });
+  } catch (e) {
+    res.status(500).json({
+      message:
+        'Ocurrio un error al obtener evluaciones de la practica ' + e.message
+    });
+  }
+};
+
+export const enproceso = async (req, res) => {
+  const { id } = req.params;
+  if (!(id > 0)) {
+    return res.status(403).json({
+      message: 'Ingrese un id valido'
+    });
+  }
+  try {
+    const proceso = await Practicas.findAndCountAll({
+      where: {
+        estado: {
+          [Op.eq]: 'EN PROCESO'
+        }
+        // fk_estudianteId: id
+      }
+    });
+    res.status(200).json({
+      message: 'Evaluaciones de la practica',
+      data: proceso
+    });
+  } catch (e) {
+    res.status(500).json({
+      message:
+        'Ocurrio un error al obtener evluaciones de la practica ' + e.message
+    });
+  }
+};
+
+export const misHorasPractica = async (req, res) => {
+  const { id } = req.params;
+  if (!(id > 0)) {
+    return res.status(403).json({
+      message: 'Ingrese un id valido'
+    });
+  }
+  try {
+    const mishoras = await Practicas.findAndCountAll({
+      attributes: ['horas'],
+      where: {
+        fk_estudianteId: id
+      }
+    });
+    // let totalhoras = 0;
+    let horas_totales = mishoras.rows;
+
+    let horasTotal = 0;
+
+    for (let hora in horas_totales) {
+      console.log(horas_totales[hora]['horas']);
+      let horaatual = parseInt(horas_totales[hora]['horas']);
+      horasTotal += horaatual;
+    }
+
+    res.status(200).json({
+      message: 'Cantidad de horas acumuladas',
+      // data: mishoras,
+      horasTotal: horasTotal.toString()
     });
   } catch (e) {
     res.status(500).json({
