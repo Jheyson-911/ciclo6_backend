@@ -145,14 +145,9 @@ export const evaluacionByPractica = async (req, res) => {
 };
 
 export const enproceso = async (req, res) => {
-  const { id } = req.params;
-  if (!(id > 0)) {
-    return res.status(403).json({
-      message: 'Ingrese un id valido'
-    });
-  }
   try {
     const proceso = await Practicas.findAndCountAll({
+      group: 'fk_EstudianteId',
       where: {
         estado: {
           [Op.eq]: 'EN PROCESO'
@@ -160,9 +155,16 @@ export const enproceso = async (req, res) => {
         // fk_estudianteId: id
       }
     });
+    const totalEstudiantes = await Estudiante.findAndCountAll({});
     res.status(200).json({
       message: 'Evaluaciones de la practica',
-      data: proceso
+      data: [
+        {
+          proceso: Object.keys(proceso.count).length.toString(),
+          total: totalEstudiantes.count.toString()
+        }
+      ]
+      // proceso: proceso.count.toString()
     });
   } catch (e) {
     res.status(500).json({
