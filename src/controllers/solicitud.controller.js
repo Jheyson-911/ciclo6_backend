@@ -57,7 +57,8 @@ export const createSolicitud = async (req, res) => {
       cargo,
       area,
       descripcion,
-      fk_estudianteId: req.id
+      estado: 'EN PROCESO',
+      fk_estudianteId: req.params.id
     });
     res.status(200).json({
       message: 'Solicitud creada correctamente',
