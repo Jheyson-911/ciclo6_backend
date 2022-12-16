@@ -14,6 +14,6 @@ router.get('/all', getSolicitudes);
 router.get('/:id', getSolicitudesById);
 router.put('/:id', updateSolicitud);
 router.delete('/:id', deleteSolicitud);
-router.post('/:id', verifyToken, createSolicitud);
+router.post('/create', createSolicitud);
 
 export default router;
