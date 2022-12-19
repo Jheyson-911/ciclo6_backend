@@ -29,7 +29,8 @@ export const createSolicitud = async (req, res) => {
     representante,
     cargo,
     area,
-    descripcion
+    descripcion,
+    estado
   } = req.body;
   try {
     if (
@@ -47,6 +48,25 @@ export const createSolicitud = async (req, res) => {
         message: 'Complete todos los campos'
       });
     }
+    if (!estado) {
+      const solicitud = await Solicitud.create({
+        nombre_empresa,
+        ruc,
+        actividad,
+        sector,
+        direccion,
+        representante,
+        cargo,
+        area,
+        descripcion,
+        estado: 'EN PROCESO',
+        fk_estudianteId: req.params.id
+      });
+      return res.status(200).json({
+        message: 'Solicitud creada correctamente',
+        data: solicitud
+      });
+    }
     const solicitud = await Solicitud.create({
       nombre_empresa,
       ruc,
@@ -60,6 +80,7 @@ export const createSolicitud = async (req, res) => {
       estado: 'EN PROCESO',
       fk_estudianteId: req.params.id
     });
+
     res.status(200).json({
       message: 'Solicitud creada correctamente',
       data: solicitud
@@ -82,7 +103,8 @@ export const updateSolicitud = async (req, res) => {
     representante,
     cargo,
     area,
-    descripcion
+    descripcion,
+    estado
   } = req.body;
   try {
     if (!(id > 0)) {
@@ -99,7 +121,8 @@ export const updateSolicitud = async (req, res) => {
       !representante ||
       !cargo ||
       !area ||
-      !descripcion
+      !descripcion ||
+      !estado
     ) {
       return res.status(500).json({
         message: 'Complete todos los campos'
@@ -115,7 +138,8 @@ export const updateSolicitud = async (req, res) => {
         representante,
         cargo,
         area,
-        descripcion
+        descripcion,
+        estado
       },
       { where: { id } }
     );

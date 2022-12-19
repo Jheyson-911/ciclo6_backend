@@ -16,14 +16,6 @@ export const getPracticeByStudent = async (req, res) => {
       where: {
         fk_estudianteId: id
       }
-      // include: [
-      //   {
-      //     model: Practicas,
-      //     where: {
-      //       fk_estudianteId: id
-      //     }
-      //   }
-      // ]
     });
     if (!practicas.length > 0) {
       return res.status(404).json({
@@ -146,10 +138,10 @@ export const evaluacionByPractica = async (req, res) => {
 
 export const enproceso = async (req, res) => {
   try {
-    const proceso = await Practicas.findAndCountAll({
-      group: 'fk_EstudianteId',
+    const proceso = await Estudiante.findAndCountAll({
+      group: 'id',
       where: {
-        estado: {
+        estado_practicas: {
           [Op.eq]: 'EN PROCESO'
         }
         // fk_estudianteId: id
@@ -161,6 +153,64 @@ export const enproceso = async (req, res) => {
       data: [
         {
           proceso: Object.keys(proceso.count).length.toString(),
+          total: totalEstudiantes.count.toString()
+        }
+      ]
+      // proceso: proceso.count.toString()
+    });
+  } catch (e) {
+    res.status(500).json({
+      message:
+        'Ocurrio un error al obtener evluaciones de la practica ' + e.message
+    });
+  }
+};
+export const finalizado = async (req, res) => {
+  try {
+    const proceso = await Estudiante.findAndCountAll({
+      group: 'id',
+      where: {
+        estado_practicas: {
+          [Op.eq]: 'FINALIZADO'
+        }
+        // fk_estudianteId: id
+      }
+    });
+    const totalEstudiantes = await Estudiante.findAndCountAll({});
+    res.status(200).json({
+      message: 'Evaluaciones de la practica',
+      data: [
+        {
+          finalizado: Object.keys(proceso.count).length.toString(),
+          total: totalEstudiantes.count.toString()
+        }
+      ]
+      // proceso: proceso.count.toString()
+    });
+  } catch (e) {
+    res.status(500).json({
+      message:
+        'Ocurrio un error al obtener evluaciones de la practica ' + e.message
+    });
+  }
+};
+export const noInicio = async (req, res) => {
+  try {
+    const proceso = await Estudiante.findAndCountAll({
+      group: 'id',
+      where: {
+        estado_practicas: {
+          [Op.eq]: 'NO INICIO'
+        }
+        // fk_estudianteId: id
+      }
+    });
+    const totalEstudiantes = await Estudiante.findAndCountAll({});
+    res.status(200).json({
+      message: 'Evaluaciones de la practica',
+      data: [
+        {
+          inicio: Object.keys(proceso.count).length.toString(),
           total: totalEstudiantes.count.toString()
         }
       ]
