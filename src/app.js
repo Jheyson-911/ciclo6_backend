@@ -3,6 +3,7 @@ import authRoutes from './routes/auth.route.js';
 import docenteRoutes from './routes/docente.route.js';
 import documentoRoutes from './routes/documentos.route.js';
 import empresaRoutes from './routes/empresa.route.js';
+import convocatoriaRoutes from './routes/convocatoria.route.js';
 import estudianteRoutes from './routes/estudiante.route.js';
 import evaluacionRoutes from './routes/evaluacion.route.js';
 import express from 'express';
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 app.use('/apiv1/auth', authRoutes);
 app.use('/apiv1/user', userRoutes);
 app.use('/apiv1/empresa', empresaRoutes);
+app.use('/apiv1/convocatoria', convocatoriaRoutes);
 app.use('/apiv1/estudiante', estudianteRoutes);
 app.use('/apiv1/docente', docenteRoutes);
 app.use('/apiv1/documento', documentoRoutes);

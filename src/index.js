@@ -23,8 +23,8 @@ async function main () {
     }
     await sequelize.authenticate();
     console.log('Connection has been established successfully.');
-    app.listen(port, '192.168.1.104', () => {
-      console.log(`listening on port http://192.168.1.104:${port}`);
+    app.listen(port, '192.168.43.189', () => {
+      console.log(`listening on port http://192.168.43.189:${port}`);
     });
   } catch (error) {
     console.error('Unable to connect to the database:', error);
