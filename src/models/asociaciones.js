@@ -1,4 +1,5 @@
 /* Importing the models. */
+import { Convocatoria } from './convocatoria.model.js';
 import { Docente } from './docente.model.js';
 import { Documentos } from './documentos.model.js';
 import { Empresa } from './empresa.model.js';
@@ -131,3 +132,12 @@ Post.belongsTo(User, {
   }
 });
 // END POST
+
+// CONVOCATORIA
+
+Convocatoria.belongsTo(Empresa, {
+  foreignKey: {
+    name: 'fk_empresaId'
+  }
+});
+// END CONVOCATORIA

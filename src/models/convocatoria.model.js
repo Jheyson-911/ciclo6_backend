@@ -13,7 +13,7 @@ export const Convocatoria = sequelize.define(
       type: DataTypes.STRING
     },
     cupos: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     cargo: {
       type: DataTypes.STRING

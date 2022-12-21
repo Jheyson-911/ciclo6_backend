@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
 app.use('/apiv1/auth', authRoutes);
 app.use('/apiv1/user', userRoutes);
 app.use('/apiv1/empresa', empresaRoutes);
-app.use('/apiv1/convocatoria', convocatoriaRoutes);
+app.use('/apiv1/convocatorias', convocatoriaRoutes);
 app.use('/apiv1/estudiante', estudianteRoutes);
 app.use('/apiv1/docente', docenteRoutes);
 app.use('/apiv1/documento', documentoRoutes);
